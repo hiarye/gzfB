@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hnpbc.dao.sys.UserMapper">
+  <resultMap id="BaseResultMap" type="hnpbc.entity.sys.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="USERNAME_" jdbcType="VARCHAR" property="username" />
+    <result column="ADMINISTRATOR_" jdbcType="BIT" property="administrator" />
+    <result column="CNAME_" jdbcType="VARCHAR" property="cname" />
+    <result column="CREATE_DATE_" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="MODIFY_DATE_" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="IDENTITY_CARD_" jdbcType="VARCHAR" property="identityCard" />
+    <result column="EMAIL_" jdbcType="VARCHAR" property="email" />
+    <result column="ENABLED_" jdbcType="BIT" property="enabled" />
+    <result column="ENAME_" jdbcType="VARCHAR" property="ename" />
+    <result column="MOBILE_" jdbcType="VARCHAR" property="mobile" />
+    <result column="PASSWORD_" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    USERNAME_, ADMINISTRATOR_, CNAME_, CREATE_DATE_, MODIFY_DATE_, IDENTITY_CARD_, EMAIL_, 
+    ENABLED_, ENAME_, MOBILE_, PASSWORD_
+  </sql>
+
+  <select id="selectByDept" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--
+      huangzw
+    -->
+    select
+    s_user.USERNAME_, s_user.ADMINISTRATOR_, s_user.CNAME_, s_user.CREATE_DATE_, s_user.MODIFY_DATE_, s_user.IDENTITY_CARD_, s_user.EMAIL_,
+    s_user.ENABLED_, s_user.ENAME_, s_user.MOBILE_
+    from s_user left join s_user_dept on s_user.USERNAME_ = s_user_dept.USERNAME_
+    <where> s_user_dept.DEPT_ID_ = #{deptId} </where>
+  </select>
+  <select id="selectCountByDept" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <!--
+      huangzw
+    -->
+    select count(1)
+    from s_user left join s_user_dept on s_user.USERNAME_ = s_user_dept.USERNAME_
+    <where> s_user_dept.DEPT_ID_ = #{deptId} order by s_user.USERNAME_</where>
+  </select>
+  <update id="updatePassword" parameterType="java.lang.String">
+    update s_user set PASSWORD_ = #{password} where USERNAME_ = #{username}
+  </update>
+  <update id="updateOneExceptPassword" parameterType="hnpbc.entity.sys.User">
+    UPDATE s_user SET USERNAME_= #{user.username},CNAME_=#{user.cname},CREATE_DATE_=#{user.createDate},MODIFY_DATE_=#{user.modifyDate},IDENTITY_CARD_=#{user.identityCard},EMAIL_=#{user.email},ENABLED_=#{user.enabled},ENAME_=#{user.ename},MOBILE_=#{user.mobile} WHERE USERNAME_ = #{user.username}
+  </update>
+</mapper>
