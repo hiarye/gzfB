@@ -1,6 +1,6 @@
 package hnpbc.controller.login;
 
-import hnpbc.bean.JWTBean;
+import hnpbc.bean.WebToken;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +19,10 @@ import java.security.Key;
 public class JWTController {
 
     @RequestMapping(value = "/getJwt",method = {RequestMethod.POST,RequestMethod.GET})
-    public JWTBean getJwt(HttpServletRequest request){
+    public WebToken getJwt(HttpServletRequest request){
         System.out.println("This is getJwt");
         HttpSession session = request.getSession();
-        JWTBean bean = new JWTBean();
+        WebToken bean = new WebToken();
         System.out.println(session.getId());
         if(session == null || session.getAttribute("username")==null || "".equals(session.getAttribute("username").toString().trim())){
             bean.setExpire("");
@@ -45,10 +45,10 @@ public class JWTController {
     }
 
     @RequestMapping(value = "/checkJwt",method = {RequestMethod.POST,RequestMethod.GET})
-    public JWTBean checkJwt(HttpServletRequest request){
+    public WebToken checkJwt(HttpServletRequest request){
         String token = request.getHeader("Authorization");
 
-        JWTBean bean = new JWTBean();
+        WebToken bean = new WebToken();
 
         if (token==null || "".equals(token.trim())) {
             return bean;

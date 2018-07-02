@@ -1,6 +1,6 @@
 package hnpbc.bean;
 
-public class JWTBean {
+public class WebToken {
     private String data;
     private String expire;
 
