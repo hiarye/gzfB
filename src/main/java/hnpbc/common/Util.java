@@ -1,5 +1,9 @@
 package hnpbc.common;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+
+import javax.xml.bind.DatatypeConverter;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,5 +26,12 @@ public class Util {
                 return null;
             }
         }
+    }
+
+    static public String decodeJwt(String webtoken) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(DatatypeConverter.parseBase64Binary("gzfxt"))
+                .parseClaimsJws(webtoken).getBody();
+        return claims.getSubject();
     }
 }

@@ -5,21 +5,21 @@ import hnpbc.entity.sys.Router;
 import java.util.List;
 
 public interface RouterService {
-    public void insertOne(Router router);
+    void insertOne(Router router);
 
-    public void deleteOne(String id);
+    void deleteOne(String id);
 
-    public void updateOne(Router router);
+    void updateOne(Router router);
 
-    public Router selectByPrimaryKey(String id);
+    Router selectByPrimaryKey(String id);
 
-    public List<Router> selectChildrenByParentId(String parentId);
+    List<Router> selectChildrenByParentId(String parentId);
 
-    public Router selectRoot();
+    List<Router> selectRouterByUsername(String username);
 
-//    public List<Router> selectChildrenAndR(String roleId, String parentId);
+    List<Router> selectAllRouter();
 
-//    public List<Router> selectAllAndAuthRecursion(String roleId);
+    Router selectRoot();
 
-    public List<Router> selectAllRecursion();
+    List<Router> selectAllRecursion();
 }

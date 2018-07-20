@@ -6,17 +6,19 @@ import java.util.List;
 
 public interface DeptService {
 
-    public Dept t();
+    Dept t();
 
-    public List<Dept> selectByPage();
+    List<Dept> selectByPage();
 
-    public Dept selectByPrimaryKey(String id);
+    Dept selectByPrimaryKey(String id);
 
-    public List<Dept> selectChildenByParentId(String parentId);
+    List<Dept> selectChildenByParentId(String parentId);
 
-    public void insertOne(Dept dept,String parentCode);
+    Dept selectOrg(String deptId);
 
-    public void updateOne(Dept dept);
+    void insertOne(Dept dept,String parentCode);
 
-    public void deleteOne(Dept dept);
+    void updateOne(Dept dept);
+
+    void deleteOne(Dept dept);
 }

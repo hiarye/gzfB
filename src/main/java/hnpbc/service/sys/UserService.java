@@ -6,17 +6,17 @@ import java.util.List;
 
 public interface UserService {
 
-    public User selectOneByPrimaryKey(String username);
+    User selectOneByPrimaryKey(String username);
 
-    public List<User> selectUsersByDeptIdAndPaged(String deptId, Integer currentPage);
+    List<User> selectUsersByDeptIdAndPaged(String deptId, Integer currentPage);
 
-    public int selectUsersCountByDeptId(String deptId);
+    int selectUsersCountByDeptId(String deptId);
 
-    public void insertOne(User user);
+    void insertOne(User user);
 
-    public void updateOne(User user);
+    void updateOne(User user);
 
-    public void resetPassword(String username,String password);
+    void resetPassword(String username,String password);
 
-    public void deleteOne(String username);
+    void deleteOne(String username);
 }

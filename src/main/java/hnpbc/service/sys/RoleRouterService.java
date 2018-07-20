@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface RoleRouterService {
 
-    public List<RoleRouter> selectRoleRouterByRole(String roleId);
+    List<RoleRouter> selectRoleRouterByRole(String roleId);
 
-    public void saveBatch(String roleId, List<String> routerIds);
+    void saveBatch(String roleId, List<String> routerIds);
 
-    public void deleteBatch(String roleId);
+    void deleteBatch(String roleId);
 }

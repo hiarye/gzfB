@@ -1,15 +1,19 @@
 package hnpbc.controller.sys;
 
 import hnpbc.bean.FeedBack;
-import hnpbc.bean.MyPasswordEncoder;
 import hnpbc.bean.PageBean;
 import hnpbc.common.Util;
-import hnpbc.entity.sys.*;
-import hnpbc.service.sys.*;
+import hnpbc.entity.sys.Role;
+import hnpbc.entity.sys.RoleRouter;
+import hnpbc.service.sys.RoleMemberService;
+import hnpbc.service.sys.RoleRouterService;
+import hnpbc.service.sys.RoleService;
+import hnpbc.service.sys.RouterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +31,9 @@ public class RoleController {
 
     @Autowired
     private RoleRouterService roleRouterService;
+
+    @Autowired
+    private RoleMemberService roleMemberService;
 
     @RequestMapping(value = "/getRolesPaged",method = {RequestMethod.POST,RequestMethod.GET})
     public PageBean getRolesPaged(@RequestBody Map<String,Object> reqMap, HttpServletRequest request) {
@@ -83,15 +90,6 @@ public class RoleController {
         return fb;
     }
 
-//    @RequestMapping(value = "/getAuthTree",method = {RequestMethod.POST,RequestMethod.GET})
-//    public FeedBack getAuthTree(@RequestBody Map<String,Object> reqMap, HttpServletRequest request) {
-//        FeedBack fb = new FeedBack();
-//        String roleId = (String)reqMap.get("roleId");
-//        List<Router> list = routerService.selectAllAndAuthRecursion(roleId);
-//        fb.setType(FeedBack.TYPE_SUCC);
-//        fb.setData(list);  //去掉根节点
-//        return fb;
-//    }
 
     @RequestMapping(value = "/getRoleRouter",method = {RequestMethod.POST,RequestMethod.GET})
     public FeedBack getRoleRouter(@RequestBody Map<String,Object> reqMap, HttpServletRequest request) {
@@ -119,6 +117,40 @@ public class RoleController {
         return fb;
     }
 
+    @RequestMapping(value = "/getUserSelectedRoles",method = {RequestMethod.POST,RequestMethod.GET})
+    public FeedBack getUserSelectedRoles(@RequestBody Map<String,Object> reqMap, HttpServletRequest request) {
+        FeedBack fb = new FeedBack();
+        String username = (String)reqMap.get("username");
+        if (username != null && !"".equals(username.trim())) {
+            List<Role> list = roleService.selectAllWithOneUser(username);
+            fb.setData(list);
+            fb.setType(FeedBack.TYPE_SUCC);
+        }else {
+            fb.setType(FeedBack.TYPE_FAIL);
+        }
+        return fb;
+    }
+
+    @RequestMapping(value = "/saveUserRole",method = {RequestMethod.POST,RequestMethod.GET})
+    public FeedBack saveUserRole(@RequestBody Map<String,Object> reqMap, HttpServletRequest request) {
+        FeedBack fb = new FeedBack();
+        if (reqMap != null ) {
+            String username = (String)reqMap.get("username");
+            List<Map<String,Object>> list = (List)reqMap.get("selected");
+            Date date = new Date();
+            List<String> ids = new ArrayList<String>();
+            for (Map<String,Object> item : list) {
+                String roleId = (String)item.get("roleid");
+                ids.add(roleId);
+            }
+            roleMemberService.deleteBathByUser(username);
+            roleMemberService.saveBatchByUser(username,ids);
+            fb.setType(FeedBack.TYPE_SUCC);
+        } else {
+            fb.setType(FeedBack.TYPE_FAIL);
+        }
+        return fb;
+    }
 
     private Role mapToEntity(Map<String,Object> map){
         Role role = new Role();

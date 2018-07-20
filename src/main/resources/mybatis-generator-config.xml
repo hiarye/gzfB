@@ -68,6 +68,7 @@
         <!--<table tableName="s_role" domainObjectName="Role" />-->
         <!--<table tableName="s_router" domainObjectName="Router" />-->
         <!--<table tableName="s_role_router" domainObjectName="RoleRouter" />-->
+        <!--<table tableName="s_role_member" domainObjectName="RoleMember" />-->
         <table tableName="aaa"></table>
     </context>
 </generatorConfiguration>

@@ -5,5 +5,7 @@ import hnpbc.entity.sys.UserDept;
 
 public interface UserDeptService {
 
-    public void insertOne(UserDept userDept);
+    void insertOne(UserDept userDept);
+
+    UserDept selectOneByUserName(String username);
 }

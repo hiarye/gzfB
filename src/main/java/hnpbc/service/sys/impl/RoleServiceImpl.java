@@ -28,6 +28,11 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    public List<Role> selectAllWithOneUser(String username) {
+        return roleMapper.selectAllWithOneUser(username);
+    }
+
+    @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public int selectRolesCount() {
         return roleMapper.selectCount(null);

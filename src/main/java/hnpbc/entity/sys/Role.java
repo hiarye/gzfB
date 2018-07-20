@@ -1,6 +1,7 @@
 package hnpbc.entity.sys;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "s_role")
@@ -23,6 +24,17 @@ public class Role {
 
     @Column(name = "NAME_")
     private String name;
+
+    @Transient
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     /**
      * @return ID_

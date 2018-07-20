@@ -53,6 +53,19 @@ public class RouterServiceImpl implements RouterService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Router> selectRouterByUsername(String username) {
+        return routerMapper.selectAllByUsername(username);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public List<Router> selectAllRouter() {
+        return routerMapper.selectAll();
+    }
+
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public Router selectRoot() {
         RouterExample example = new RouterExample();
         example.createCriteria().andParentIdIsNull();

@@ -42,6 +42,20 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
+    public Dept selectOrg(String deptId) {
+        Dept dept = deptMapper.selectByPrimaryKey(deptId);
+        if (dept != null ) {
+            if (dept.getIsOrg()) {
+                return dept;
+            } else {
+                return selectOrg(dept.getParentId());
+            }
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<Dept> selectByPage() {
         PageHelper.offsetPage(0,5);
         List<Dept> deptList = deptMapper.select(null);

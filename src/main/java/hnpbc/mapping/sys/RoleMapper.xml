@@ -12,6 +12,20 @@
     <result column="ENABLED_" jdbcType="BIT" property="enabled" />
     <result column="NAME_" jdbcType="VARCHAR" property="name" />
   </resultMap>
+  <resultMap id="RoleResultMap" type="hnpbc.entity.sys.Role">
+    <!--
+      huangzhongwei
+    -->
+    <result column="ID_" jdbcType="VARCHAR" property="id" />
+    <result column="CREATE_DATE_" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="MODIFY_DATE_" jdbcType="TIMESTAMP" property="modifyDate" />
+    <result column="DESCRIBE_" jdbcType="VARCHAR" property="describe" />
+    <result column="ENABLED_" jdbcType="BIT" property="enabled" />
+    <result column="NAME_" jdbcType="VARCHAR" property="name" />
+    <collection property="users" ofType="hnpbc.entity.sys.User">
+      <result column="USERNAME_" jdbcType="VARCHAR" property="username" />
+    </collection>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <!--
       WARNING - @mbg.generated
@@ -82,4 +96,8 @@
     -->
     ID_, CREATE_DATE_, MODIFY_DATE_, DESCRIBE_, ENABLED_, NAME_
   </sql>
+  <select id="selectAllWithOneUser" parameterType="java.lang.String" resultMap="RoleResultMap">
+    SELECT r.*,m.username_ FROM s_role r left join (SELECT s_role_member.role_id_,s_role_member.USERNAME_ FROM s_role_member,s_user where s_role_member.USERNAME_ = s_user.USERNAME_ and s_user.USERNAME_ = #{username}) m on r.ID_ = m.role_id_
+    where r.enabled_ = true
+  </select>
 </mapper>

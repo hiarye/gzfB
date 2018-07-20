@@ -146,4 +146,10 @@
     <include refid="Base_Column_List"/>
     from s_router WHERE PARENT_ID_ ='' or PARENT_ID_ is NULL ORDER BY SORT_ORDER_ ASC
   </select>
+
+  <select id="selectAllByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from s_router where exists( select 1 from (select router_id_ from s_role_router where exists(select 1 from s_role_member where username_ = #{username} and s_role_router.role_id_ = s_role_member.role_id_)) m where s_router.id_ = m.router_id_)
+  </select>
 </mapper>

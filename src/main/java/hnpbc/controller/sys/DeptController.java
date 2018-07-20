@@ -1,12 +1,14 @@
 package hnpbc.controller.sys;
 
 import hnpbc.bean.FeedBack;
+import hnpbc.common.Util;
 import hnpbc.entity.sys.Dept;
 import hnpbc.entity.sys.Test;
 import hnpbc.entity.sys.Test2;
 import hnpbc.service.sys.DeptService;
 import hnpbc.service.sys.Test2Service;
 import hnpbc.service.sys.TestService;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -138,10 +140,16 @@ public class DeptController {
 
     // 根据当前用户获得其所在部门
     @RequestMapping(value = "/getRootNodeByUser",method = {RequestMethod.POST,RequestMethod.GET})
-    public Dept getDeptByUser() {
+    public Dept getDeptByUser(HttpServletRequest request) {
         //从jwt中即可获得当前用户所在部门的基本信息
-        String deptId = "f46d4a92-b15b-4948-8c36-a28f744952ad";
-        String deptName = "cszz";
+        String deptId = null;
+
+        String token = request.getHeader("Authorization");
+        if(token != null && !"".equals(token)) {
+            String jsonStr = Util.decodeJwt(token);
+            JSONObject json = JSONObject.fromObject(jsonStr);
+            deptId = (String)json.get("orgid");
+        }
 
         Dept dept = deptService.selectByPrimaryKey(deptId);
 

@@ -6,13 +6,15 @@ import java.util.List;
 
 public interface RoleService {
 
-    public List<Role> selectRolesPaged(Integer currentPage);
+    List<Role> selectRolesPaged(Integer currentPage);
 
-    public int selectRolesCount();
+    List<Role> selectAllWithOneUser(String username);
 
-    public void insertOne(Role role);
+    int selectRolesCount();
 
-    public void deleteOne(String id);
+    void insertOne(Role role);
 
-    public void updateOne(Role role);
+    void deleteOne(String id);
+
+    void updateOne(Role role);
 }

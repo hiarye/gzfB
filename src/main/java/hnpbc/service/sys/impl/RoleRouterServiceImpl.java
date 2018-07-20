@@ -35,9 +35,10 @@ public class RoleRouterServiceImpl implements RoleRouterService {
             roleRouter.setRoleId(roleId);
             roleRouter.setRouterId(routerId);
             list.add(roleRouter);
-//            roleRouterMapper.insert(roleRouter);
         }
-        roleRouterMapper.insertListIncludeId(list);
+        if (list.size()>0) {
+            roleRouterMapper.insertListIncludeId(list);
+        }
     }
 
     @Override

@@ -53,7 +53,7 @@ public class JWTController {
         if (token==null || "".equals(token.trim())) {
             return bean;
         } else {
-            System.out.println(token);
+            System.out.println("checkJwt:"+token);
             return bean;
         }
     }

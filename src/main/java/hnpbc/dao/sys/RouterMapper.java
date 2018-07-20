@@ -22,4 +22,6 @@ public interface RouterMapper extends BaseDao<Router> {
     List<Router> selectAllAndAuthRecursion(@Param("roleId") String roleId);
 
     List<Router> selectAllRecursion();
+
+    List<Router> selectAllByUsername(@Param("username") String username);
 }

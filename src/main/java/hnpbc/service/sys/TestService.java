@@ -5,7 +5,7 @@ import hnpbc.entity.sys.Test;
 import java.util.List;
 
 public interface TestService {
-    public Test t();
+    Test t();
 
-    public List<Test> t2();
+    List<Test> t2();
 }
