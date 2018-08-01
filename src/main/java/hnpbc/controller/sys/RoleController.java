@@ -5,10 +5,7 @@ import hnpbc.bean.PageBean;
 import hnpbc.common.Util;
 import hnpbc.entity.sys.Role;
 import hnpbc.entity.sys.RoleRouter;
-import hnpbc.service.sys.RoleMemberService;
-import hnpbc.service.sys.RoleRouterService;
-import hnpbc.service.sys.RoleService;
-import hnpbc.service.sys.RouterService;
+import hnpbc.service.sys.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +24,7 @@ public class RoleController {
     private RoleService roleService;
 
     @Autowired
-    private RouterService routerService;
+    private RoleRoleService roleRoleService;
 
     @Autowired
     private RoleRouterService roleRouterService;
@@ -151,6 +148,42 @@ public class RoleController {
         }
         return fb;
     }
+
+    @RequestMapping(value = "/getRoleSelectedRoles",method = {RequestMethod.POST,RequestMethod.GET})
+    public FeedBack getRoleSelectedRoles(@RequestBody Map<String,Object> reqMap, HttpServletRequest request) {
+        FeedBack fb = new FeedBack();
+        String roleid = (String)reqMap.get("roleid");
+        if (roleid != null && !"".equals(roleid.trim())) {
+            List<Role> list = roleService.selectAllWithOneRole(roleid);
+            fb.setData(list);
+            fb.setType(FeedBack.TYPE_SUCC);
+        }else {
+            fb.setType(FeedBack.TYPE_FAIL);
+        }
+        return fb;
+    }
+
+    @RequestMapping(value = "/saveRoleRole",method = {RequestMethod.POST,RequestMethod.GET})
+    public FeedBack saveRoleRole(@RequestBody Map<String,Object> reqMap, HttpServletRequest request) {
+        FeedBack fb = new FeedBack();
+        if (reqMap != null ) {
+            String roleid = (String)reqMap.get("roleid");
+            List<Map<String,Object>> list = (List)reqMap.get("selected");
+            Date date = new Date();
+            List<String> ids = new ArrayList<String>();
+            for (Map<String,Object> item : list) {
+                String roleId = (String)item.get("roleid");
+                ids.add(roleId);
+            }
+            roleRoleService.deleteBatch(roleid);
+            roleRoleService.saveBatch(roleid,ids);
+            fb.setType(FeedBack.TYPE_SUCC);
+        } else {
+            fb.setType(FeedBack.TYPE_FAIL);
+        }
+        return fb;
+    }
+
 
     private Role mapToEntity(Map<String,Object> map){
         Role role = new Role();

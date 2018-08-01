@@ -28,6 +28,17 @@ public class Role {
     @Transient
     private List<User> users;
 
+    @Transient
+    private List<Role> roles;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     public List<User> getUsers() {
         return users;
     }

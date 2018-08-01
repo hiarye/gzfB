@@ -10,6 +10,8 @@ public interface RoleService {
 
     List<Role> selectAllWithOneUser(String username);
 
+    List<Role> selectAllWithOneRole(String roleid);
+
     int selectRolesCount();
 
     void insertOne(Role role);

@@ -15,6 +15,8 @@ public interface RoleMapper extends BaseDao<Role> {
 
     List<Role> selectAllWithOneUser(@Param("username") String username);
 
+    List<Role> selectAllWithOneRole(@Param("roleid") String roleid);
+
     int updateByExampleSelective(@Param("record") Role record, @Param("example") RoleExample example);
 
     int updateByExample(@Param("record") Role record, @Param("example") RoleExample example);

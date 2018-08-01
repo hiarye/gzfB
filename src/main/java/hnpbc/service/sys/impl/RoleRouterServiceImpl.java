@@ -19,6 +19,7 @@ public class RoleRouterServiceImpl implements RoleRouterService {
     private RoleRouterMapper roleRouterMapper;
 
     @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
     public List<RoleRouter> selectRoleRouterByRole(String roleId) {
         RoleRouterExample example = new RoleRouterExample();
         example.createCriteria().andRoleIdEqualTo(roleId);
